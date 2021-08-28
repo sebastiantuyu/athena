@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+
+:root{
+  --white:#F3F3F3;
+  --base:#FFBA00;
+  --darkMain:#27282D;
+  --darkMedium:#5F616C;
+  --darkLight:#B3B4B5;
+  --compBlue:#00AEC3;
+  --compGreen:#48CF39;
+  --compPurple:#5400C4;
+  --compGreenLight:#BFED14;
+
+
+  --logo-title:28px;
+  --menu-width:unset;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins';
+}
+
+
+.shadow-lg {
+  box-shadow:39.9168px -2.57788px 40px rgba(0, 0, 0, 0.12), 25.872px -1.67085px 23.4259px rgba(0, 0, 0, 0.0911111), 15.3754px -0.992961px 12.7407px rgba(0, 0, 0, 0.0728889), 7.98337px -0.515576px 6.5px rgba(0, 0, 0, 0.06), 3.25248px -0.210049px 3.25926px rgba(0, 0, 0, 0.0471111), 0.739201px -0.0477385px 1.57407px rgba(0, 0, 0, 0.0288889);
+}
+
+
+
+@media screen and (min-width:320px) {}
+@media screen and (min-width:425px) {}
+@media screen and (min-width:475px) {}
+@media screen and (min-width:768px) {}
+@media screen and (min-width:1024px){
+  :root{
+    --menu-width:300px;
+  }
+}
+@media screen and (min-width:1200px){
+  :root {
+    --menu-width:380px;
+  }
+}
+@media screen and (min-width:1440px) {
+  :root {
+    --menu-width:450px;
+  }
+}
+
+
+
+
+
