@@ -1,0 +1,26 @@
+.item-info-container {
+    width: 100%;
+}
+
+.item-info {
+    width: 60% !important;
+}
+
+.item-info-main {
+    height: inherit;
+    width: 20%;
+    cursor: pointer;
+}
+
+
+.item-info-main > span {
+    width: 60%;
+    height: 60%;
+    border-radius: 10px;
+    background:rgba(0,0,0,0.3);
+    color: var(--white);
+}
+
+.auth-sign{
+    height: max-content !important;
+}
