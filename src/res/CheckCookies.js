@@ -5,7 +5,8 @@ const CheckCookies = () => {
 
 
     try{
-        return StorageHandler.instance.loadSession();    
+        //return StorageHandler.instance.loadSession();    
+        return true
         
     } catch (err) {
         // Trigger if there is a problem reading the cookies

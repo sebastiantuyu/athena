@@ -1,0 +1,20 @@
+.profile-container{
+    width: 80%;
+    height: 50px;
+
+    background:rgba(255,255,255,0.5);
+    border-radius: 15px;
+    margin:1em 0 1em 0;
+}
+
+.profile-photo {
+    width: 30%;
+}
+
+.profile-photo img{
+    width: 50%;
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+
+}

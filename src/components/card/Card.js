@@ -1,4 +1,15 @@
 import React from 'react'
+import './Card.css'
+import Next from "../../assets/next.png"
+import Match from "../../assets/match.png"
+import Chinese from "../../assets/flags/chi.png"
+import Deutsch from "../../assets/flags/deu.png"
+import English from "../../assets/flags/eng.png"
+import Spanish from "../../assets/flags/esp.png"
+import French from "../../assets/flags/fra.png"
+import Italian from "../../assets/flags/ita.png"
+import Japanese from "../../assets/flags/jap.png"
+
 
 
 /**
@@ -8,9 +19,74 @@ import React from 'react'
  * @returns Left or Rigth constant after swipe
  */
 export default function Card({userData,onSwipe}) {
+    
+    const selectIcon = (lang) => {
+        switch(lang)
+         {
+             case 'es':
+                 return Spanish
+            case 'eng':
+                return English
+            case 'fra':
+                return French
+            case 'ita':
+                return Italian
+            case 'jap':
+                return Japanese
+            case 'deu':
+                return Deutsch
+            case 'chi':
+                return Chinese
+         }
+    }
+
+    const renderSkill = () => {
+
+    }
+
+
+    const renderLang = () => {
+        return userData.lang.map((item) => {
+            return( <div className="lang-item d-flex center-center shadow">
+                        <img src={selectIcon(item)} alt="" />
+                    </div>)
+        })
+    }
+   
     return (
-        <div>
-            
+        <div className="card-container shadow-lg d-flex f-column a-center">
+                <div className="card-container-profile a-center">
+                    <div class="card-photo d-flex center-center">
+                        <img src={userData.image} alt=""/>
+                    </div>
+                    
+                    <div className="card-description">
+                        <p>{userData.name}</p>
+                        <p>{userData.description}</p>
+                        <p>{userData.location}</p>
+                    </div>
+                    
+                </div>
+
+                <div className="card-container-skill">
+                    <div className="skill">
+                        {renderSkill()}
+                    </div>           
+
+                    <div className="skill-lang">
+                        {renderLang()}
+                    </div>
+                </div>
+
+                <div className="card-buttons-bar d-flex a-center w-100">
+                    <div className="button-left">
+                        <img src={Next} alt="" />
+                    </div>
+
+                    <div className="button-right">
+                        <img src={Match} alt="" />
+                    </div>
+                </div>
         </div>
     )
 }

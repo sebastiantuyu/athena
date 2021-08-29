@@ -1,23 +1,63 @@
 .menu-l-container {
     background-color: var(--darkMain);
-    width:var(--menu-width);
     height: calc(100vh - 1rem);
     padding: 0.5rem 0.5rem 0.5rem 2rem;
     display: none;
-    overflow: hidden;
+    overflow: hidden scroll;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.menu-l-container::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-settings {
+}
+
+.logo-wrapper {
+    background: var(--darkMain);
+    position: relative;
+}
+
+.setting {
+    margin:2em 0 0 0;
+}
+
+.preferences-container{
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 
+.preference-item {
+    background-color: var(--compGreenLight);
+    width: max-content;
+    height: auto;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    margin: 0.5em;
+    border-radius: 20px;
+}
 
+.item-empty{
+    background: rgba(0,0,0,0);
+    border:1px solid var(--compGreenLight);
+    color:var(--compGreenLight);
+}
 
+.add {
+    transform: rotate(-45deg);
+}
 
+.preference-item > img {
+    width: 20px;
+    margin:0 0 0 0.5em;
+}
 
-
-
-
-
-
-
+.p-header{
+    color: var(--white);
+}
 
 
 
