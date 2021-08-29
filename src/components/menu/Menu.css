@@ -53,6 +53,10 @@
     transform: rotate(-45deg);
 }
 
+.preference-item{
+    cursor: pointer;
+}
+
 .preference-item > img {
     width: 20px;
     margin:0 0 0 0.5em;

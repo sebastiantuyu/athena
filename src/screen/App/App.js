@@ -2,10 +2,12 @@ import './App.css';
 import Menu from '../../components/menu/Menu'
 import CheckCookies from '../../res/CheckCookies';
 import Card from '../../components/card/Card';
+import API from '../../res/API';
 
 function App() {
 
   const loadInformation = () => {
+
       return {
           name:"Sebastian Tuyu",
           description:"I'm a developer that loves to learn and understand new topics, always trying to develop new skills",
@@ -22,6 +24,7 @@ function App() {
   
 
   const renderCard = () => {
+      
       const data = loadInformation()
 
       return (

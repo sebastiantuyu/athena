@@ -1,23 +1,49 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Logo from '../logo/Logo'
-import Switch from '../switch/Switch'
 import './Menu.css'
 import './Modal.css'
 import Delete from '../../assets/svgs/delete.svg'
 import ItemProfile from '../profile/ItemProfile'
+import API from '../../res/API'
+import LangPicker from '../picker/LangPicker'
 
 
 export default function Menu() {
     
+
+
     const [state, setState] = useState({
         show:false,
         points:'int',
         interests:["Python","Django","UX/UI","Figma","LOL"],
         langs:["esp","eng"],
-        settingContent:""
+        settingContent:"",
+        localLangs:[],
+        selectedLang:"",
     })
 
     const [setting, setSetting] = useState("")
+
+    useEffect(() => {
+        loadUserPreferences()
+    }, state)
+
+    const loadUserPreferences = async () => {
+
+        const localLang = JSON.parse(await API.langs.getAll())
+        const data = JSON.parse(await API.user.readPreferences(1))
+        
+        setState((prev) => ({...prev,
+                                langs:data.languages,
+                                interest:data.interests,
+                                localLangs:localLang
+                                }))       
+    }
+
+
+    const onSelectLang = (lang) => {
+        setSetting(lang)
+    }
 
     const addSetting = () => {
         tooggleModal()
@@ -52,10 +78,18 @@ export default function Menu() {
                         <span className="modal-tit">
                             Agrega un nuevo {pickerSettings()}
                             </span>
-                            <input  type="text" 
-                                    placeholder={"Escribe aqui tu nuevo " + pickerSettings()}
-                                    className="m-input"
-                                    onChange={(e) => setSetting(e.target.value)}/>
+                            {
+                                pickerSettings() === 'lenguaje' ?
+                
+                                <LangPicker langList={state.localLangs} 
+                                            name="lang"
+                                            onSelect={onSelectLang}/> :
+                
+                                <input  type="text" 
+                                placeholder={"Escribe aqui tu nuevo " + pickerSettings()}
+                                className="m-input"
+                                onChange={(e) => setSetting(e.target.value)}/>
+                            }
                         </div>
 
                         <div className="m-btn-bar">
@@ -99,9 +133,10 @@ export default function Menu() {
         const preferences = state.langs
 
         return preferences.map((item) => {
+            console.log(item)
             return(
                 <div className="preference-item d-flex a-center">
-                    {item}
+                    {item.name}
                     <img src={Delete} alt="" />
                 </div>
             )
@@ -139,7 +174,7 @@ export default function Menu() {
         })
     }
 
-
+  
     return (
         <div className="menu-l-container shadow-lg">
             {renderModal()}

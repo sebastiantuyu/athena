@@ -1,6 +1,6 @@
 import Https from "./Https";
 
-const rootUrl: string = "https://3afd06b4-1920-435d-9ba3-3989ce6bf57b.mock.pstmn.io/api/"
+const rootUrl: string = "http://192.168.0.13:8000/api/"
 
 
 
@@ -40,11 +40,45 @@ class User implements CRUD {
 
     }
 
+    readPreferences = async (id:Number) => {
+
+        const response = await Https.objects.get(rootUrl+
+                                                "preferences/get-all/?id="+id,{
+                                                    method:'GET',
+                                                })
+        try {
+            if(response.status) {
+                return response.data
+            }                
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+}
+
+class Langs {
+    getAll: Function = () => {
+        return localStorage.getItem('local-langs')
+    }
+
+    setLocalLangs: Function = async () => {
+        
+        if(localStorage.getItem('local-langs') === null)
+        {
+            const data = await Https.objects.get(rootUrl+"preferences/lang/all/",{
+                                                    method:'GET'})
+            if (data.status){
+                localStorage.setItem("local-langs",data.data)
+            }
+        }
+    }
 }
 
 class API {
     
     static user: User = new User(rootUrl);
+    static langs: Langs = new Langs();
 
 }
 

@@ -35,6 +35,7 @@
 .m-b{
     border-style: solid;
     border-color: grey;
+    cursor: pointer;
 }
 
 .m-b:nth-of-type(1){

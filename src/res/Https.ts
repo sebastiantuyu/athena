@@ -13,11 +13,11 @@ class Https {
             } else {
                 response = await fetch(url,options)
             }
-        
+            
             return await response.json()
         } catch (error) {
             // Trigger problem on request
-            console.error(error)
+            console.error("GET ERROR:: ",error)
             return null
         }
 

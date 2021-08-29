@@ -1,10 +1,12 @@
 import StorageHandler from './StorageHandler.js'
 import {Redirect} from 'react-router-dom'
+import API from './API.ts'
 
-const CheckCookies = () => {
+const CheckCookies = async () => {
 
 
     try{
+        await API.langs.setLocalLangs()
         //return StorageHandler.instance.loadSession();    
         return true
         
