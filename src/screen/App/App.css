@@ -23,5 +23,10 @@
         grid-template-columns: 2fr 5fr;
     }
 }
-@media screen and (min-width:1200px){}
-@media screen and (min-width:1440px){}
+@media screen and (min-width:1200px){
+}
+@media screen and (min-width:1440px){
+    .app-main-container {
+        grid-template-columns: minmax(400px,500px) 6fr;
+    }
+}

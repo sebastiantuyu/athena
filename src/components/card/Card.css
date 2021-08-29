@@ -29,13 +29,23 @@
 }
 
 .card-container-skill {
-
+    flex:1;
+    height: max-content;
+    justify-content: space-around;
 }
 
 
 .card-description{
-    width: 100%;
-    padding: 0 0 0 1em;
+    padding: 0 0 0 .5em;
+    color:var(--white);
+}
+
+.c-d-name {
+    font-size: 18px;
+}
+
+.c-d-content {
+    font-size: 10px;
 }
 
 .card-description p {
@@ -67,4 +77,76 @@
 .lang-item img {
     width: 60%;
     height: 60%;
+}
+
+.skill{
+    margin:1em;
+}
+
+.skill-lang {
+    margin:1em;
+}
+
+.interest-card-item {
+    background:rgba(255,255,255,.15);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: .25em 1.5em 0.25em 1.5em;
+    margin:0.5em 0 0.5em 0;
+    color:var(--white);
+    font-size: 15px;
+}
+
+
+.btn{
+    background: var(--white);
+    padding: .8em;
+    border-radius: 50%;
+}
+
+.btn img {
+    width: 25px;
+}
+
+.btn-right img {
+    width: 40px;
+}
+
+
+
+
+
+
+@media screen and (min-width:320px) {}
+@media screen and (min-width:425px) {}
+@media screen and (min-width:475px) {}
+@media screen and (min-width:768px) {
+
+}
+@media screen and (min-width:1024px){
+    .btn img {
+        width: 35px;
+    }
+    
+    .btn-right img {
+        width: 45px;
+    }
+    .interest-card-item{
+        font-size: 16px;
+    }
+
+}
+@media screen and (min-width:1200px){
+    .c-d-content{
+        font-size: 12px;
+    }
+}
+@media screen and (min-width:1440px){
+    .btn img {
+        width: 45px;
+    }
+    
+    .btn-right img {
+        width: 60px;
+    }
 }

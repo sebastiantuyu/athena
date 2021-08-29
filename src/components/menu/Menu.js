@@ -1,17 +1,90 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Logo from '../logo/Logo'
 import Switch from '../switch/Switch'
 import './Menu.css'
+import './Modal.css'
 import Delete from '../../assets/svgs/delete.svg'
 import ItemProfile from '../profile/ItemProfile'
 
 
 export default function Menu() {
     
+    const [state, setState] = useState({
+        show:false,
+        points:'int',
+        interests:["Python","Django","UX/UI","Figma","LOL"],
+        langs:["esp","eng"],
+        settingContent:""
+    })
+
+    const [setting, setSetting] = useState("")
+
+    const addSetting = () => {
+        tooggleModal()
+
+        if(state.points === 'int')
+        {   
+            let interest = state.interests
+            interest.push(setting)
+            setState((prev) => ({...prev,interests:interest}))
+        }
+
+        else if (state.points === 'lang'){
+            let lang = state.langs
+            lang.push(setting)
+            setState({langs:lang})
+        }
+    }
+
+    const pickerSettings = () => {
+        if(state.points === 'int'){
+            return "interes"
+        } else return "lenguaje"
+    }
+
+    const renderModal = (setting) => {
+        
+        if(state.show === true){
+            return(
+                <div className="modal-background d-flex center-center">
+                    <div className="modal-container shadow-lg d-flex f-column a-center">
+                        <div className="f-1 d-flex f-column modal-form">
+                        <span className="modal-tit">
+                            Agrega un nuevo {pickerSettings()}
+                            </span>
+                            <input  type="text" 
+                                    placeholder={"Escribe aqui tu nuevo " + pickerSettings()}
+                                    className="m-input"
+                                    onChange={(e) => setSetting(e.target.value)}/>
+                        </div>
+
+                        <div className="m-btn-bar">
+                            <div className="m-b cancel d-flex center-center" 
+                                 onClick={() => tooggleModal()}>
+                                Cancelar
+                            </div>
+                            <div className="m-b proceed d-flex center-center"
+                                onClick={() => addSetting()}>
+                                OK
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    const tooggleModal = (who) => {
+        if(state.show === true) setState((prev) => ({...prev,show:false})) 
+        else setState((prev) => ({...prev,show:true,points:who}))
+    }
+
+
+
     const loadPreferences = () => {
         
-        const preferences = ["Python","Django","UX/UI","Figma","LOL"]
-
+        const preferences = state.interests
+        
         return preferences.map((item) => {
             return(
                 <div className="preference-item d-flex a-center">
@@ -23,7 +96,7 @@ export default function Menu() {
     }
     
     const loadLang = () => {
-        const preferences = ["esp","eng"]
+        const preferences = state.langs
 
         return preferences.map((item) => {
             return(
@@ -69,6 +142,7 @@ export default function Menu() {
 
     return (
         <div className="menu-l-container shadow-lg">
+            {renderModal()}
             <div className="logo-wrapper ">
                 <Logo />
             </div>
@@ -80,7 +154,7 @@ export default function Menu() {
                     <div className="preferences-container d-flex w-100">
                         {loadPreferences()}
                         {/* Add preference button */}
-                        <div className="preference-item item-empty d-flex a-center">
+                        <div className="preference-item item-empty d-flex a-center" onClick={() => tooggleModal('int')}>
                             Añadir
                             <img src={Delete} alt="" className="add"/>
                         </div>
@@ -96,7 +170,7 @@ export default function Menu() {
                     <div className="lang-container d-flex w-100">
                         {loadLang()}
                         {/* Add preference button */}
-                        <div className="preference-item item-empty d-flex a-center">
+                        <div className="preference-item item-empty d-flex a-center"  onClick={() => tooggleModal('lang')}>
                             Añadir
                             <img src={Delete} alt="" className="add"/>
                         </div>

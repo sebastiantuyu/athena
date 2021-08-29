@@ -40,8 +40,17 @@ export default function Card({userData,onSwipe}) {
          }
     }
 
-    const renderSkill = () => {
-
+    const renderInterests = () => {
+        if(userData.interests.length > 0)
+            {
+                return userData.interests.map((item) => {
+                    return (
+                        <div className="interest-card-item shadow">
+                            {item}
+                        </div>
+                    )
+                })
+            }
     }
 
 
@@ -61,16 +70,15 @@ export default function Card({userData,onSwipe}) {
                     </div>
                     
                     <div className="card-description">
-                        <p>{userData.name}</p>
-                        <p>{userData.description}</p>
-                        <p>{userData.location}</p>
+                        <div className="c-d-name">{userData.name}</div>
+                        <p className="c-d-content">{userData.description}</p>
                     </div>
                     
                 </div>
 
-                <div className="card-container-skill">
+                <div className="card-container-skill d-flex w-100">
                     <div className="skill">
-                        {renderSkill()}
+                        {renderInterests()}
                     </div>           
 
                     <div className="skill-lang">
@@ -79,11 +87,11 @@ export default function Card({userData,onSwipe}) {
                 </div>
 
                 <div className="card-buttons-bar d-flex a-center w-100">
-                    <div className="button-left">
+                    <div className="btn btn-left d-flex center-center shadow">
                         <img src={Next} alt="" />
                     </div>
 
-                    <div className="button-right">
+                    <div className="btn btn-right d-flex center-center shadow">
                         <img src={Match} alt="" />
                     </div>
                 </div>

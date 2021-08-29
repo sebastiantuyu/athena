@@ -8,10 +8,11 @@ function App() {
   const loadInformation = () => {
       return {
           name:"Sebastian Tuyu",
-          description:"Im a java developer",
+          description:"I'm a developer that loves to learn and understand new topics, always trying to develop new skills",
           image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg",
           location:"Merida,Yucatán",
-          lang:["es","eng"]
+          lang:["es","eng"],
+          interests:["Java","Django","Web Development","Marketing"]
       }
   }
 

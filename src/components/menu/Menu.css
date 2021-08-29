@@ -30,6 +30,9 @@
     flex-wrap: wrap;
 }
 
+.lang-container {
+    flex-wrap: wrap;
+}
 
 .preference-item {
     background-color: var(--compGreenLight);
