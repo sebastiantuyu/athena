@@ -50,9 +50,9 @@ export default function LogIn({goSignUp}) {
             <div class="auth-form d-flex f-column a-center">
                 <span>Con TorreMatch puedes conocer a tus futuros co-founders</span>
                 <img src={Waiting} alt="" className="cover-logo"/>
-                <div className="auth-f-item auth-button d-flex center-center shadow guest" onClick={logIn}>
+                <a className="auth-f-item auth-button d-flex center-center shadow guest" href="/home">
                     Iniciar como invitado
-                </div>
+                </a>
             </div>
 
         </div>

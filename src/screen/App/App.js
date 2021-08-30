@@ -20,7 +20,14 @@ function App() {
   const loadInformation = async () => {
     
     const id = parseInt(API.user.getId())
+    let status = false
     if (typeof(id) === "number" && id !== 0){
+      status = true
+    } else {
+      status = await API.user.logAsGuest()
+    }
+
+    if(status == true){
       await API.langs.setLocalLangs()
       const coincidences = await loadCoincidences()
       const [status,matches] = await API.user.getMatches(id)
@@ -29,9 +36,7 @@ function App() {
         results:coincidences,
         matches:JSON.parse(matches),
         loaded:true}))
-    } else {
-      alert("Un error ha ocurrido, reintenta mas tarde.")
-    }
+      }
   }
 
     

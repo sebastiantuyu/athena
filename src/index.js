@@ -14,16 +14,10 @@ import Auth from './screen/Auth/Auth';
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-          { 
-            CheckCookies() === false ? 
-                    <Redirect to="/" /> :
-                    <App />
-          }
       <Switch>
         <Route exact path="/" component={Auth}>
         </Route>
-        <Route exact path="/home">
-        </Route>
+        <Route exact path="/home" component={App}/>
       </Switch>
     </Router>
   </React.StrictMode>,
