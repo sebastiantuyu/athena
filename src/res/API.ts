@@ -46,7 +46,7 @@ class User {
                                                     method:"POST"
                                                 })   
         if (response.status) {
-            this.setId(JSON.parse(response.data)['id'])
+            this.setId(response.data['id'])
         }                                                
         return this.onResponse(response)
     }
