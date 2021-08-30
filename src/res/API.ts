@@ -15,9 +15,11 @@ class User {
 
     private setId = (id:Number) => {
         try {
-            localStorage.setItem("session-id",id.toString())
-            this.id = id
-            return true
+            if(this.getId() === null){
+                localStorage.setItem("session-id",id.toString())
+                this.id = id
+                return true
+            } else return true
         } catch (error) {
             console.error(error)
             return null

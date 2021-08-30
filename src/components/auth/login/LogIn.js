@@ -28,18 +28,6 @@ export default function LogIn({goSignUp}) {
             setState({password:text.target.value})
     }
 
-    const logIn = async () => {
-        
-        //Request to the API for login
-        const [status,data] = await API.user.logAsGuest()
-        console.log(status,data)
-        if(status === true) {
-            setRedirect(true)
-        }
-        
-    }
-
-
     return (
         <div className="auth-logg-main shadow-lg d-flex j-center f-column j-start">
             { redirect ? <Redirect push to="/home"/>  : null }
