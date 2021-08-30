@@ -47,8 +47,9 @@ class User {
                                                 })   
         if (response.status) {
             this.setId(response.data['id'])
+            return true
         }                                                
-        return this.onResponse(response)
+        return false
     }
 
     match = async (id:Number,userInfo:any) => {

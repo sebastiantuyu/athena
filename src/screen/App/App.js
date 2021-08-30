@@ -22,11 +22,9 @@ function App() {
     const id = parseInt(API.user.getId())
     let status = false
     if (id == true){
-      console.log("founded id:",id)
       status = true
     } else {
       status = await API.user.logAsGuest()
-      console.log("status, :",status)
     }
 
     if(status == true){
