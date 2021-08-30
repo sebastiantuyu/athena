@@ -18,9 +18,9 @@ ReactDOM.render(
         <Route exact path="/" component={Auth}>
         </Route>
         <Route exact path="/home">
-          { CheckCookies() === false ? 
-                    <App/>:
-                    <Redirect to="/" />           
+          { CheckCookies() ? 
+                    <Redirect to="/" /> :
+                    <App/>
           }
         </Route>
       </Switch>
