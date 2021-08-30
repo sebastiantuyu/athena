@@ -9,9 +9,8 @@ import LangPicker from '../picker/LangPicker'
 import PreferenceItem from '../preference/PreferenceItem'
 
 
-export default function Menu({matches}) {
+export default function Menu({matches,idProfile,onSet,loaded}) {
     
-
 
     const [state, setState] = useState({
         show:false,
@@ -29,16 +28,30 @@ export default function Menu({matches}) {
         loadUserPreferences()
     }, state)
 
+
+    const fetchData = async () => {
+        return JSON.parse(await API.user.readPreferences())
+    }
+
+
     const loadUserPreferences = async () => {
 
         const localLang = JSON.parse(await API.langs.getAll())
-        const data = JSON.parse(await API.user.readPreferences(1))
-        
-        setState((prev) => ({...prev,
-                                langs:data.languages,
-                                interests:data.interests,
-                                localLangs:localLang,
-                                }))       
+        let data = []
+        try {           
+            data = await fetchData()
+        } catch (error) {
+            data = await API.user.readPreferences()
+        } finally {            
+            if(data !== undefined){
+                setState((prev) => ({...prev,
+                    langs:data.languages,
+                    interests:data.interests,
+                    localLangs:localLang,
+                }))       
+            }
+        }
+
     }
 
 
@@ -51,42 +64,57 @@ export default function Menu({matches}) {
         // Deletes the lang {id} of the list
         let list = state.langs.filter(item => item.id !== id)
         setState((prev) => ({...prev,langs:list}))
+
+        //Execute reload coincidences
+        onSet()
     }
 
     const onDeletePref = (id) => {
         // Deletes the interest {id} of the list
         let list = state.interests.filter(item => item.id !== id)
         setState((prev) => ({...prev,interests:list}))
+
+
+        //Execute reload coincidences
+        onSet()
     }
 
     const addSetting = async () => {
         tooggleModal()
 
-        if(state.points === 'int')
+        if(state.points === 'int' && loaded)
         {   
 
             // Check if there some coincidences
             let check = state.interests.filter(item => item.name.replace(' ','').toLowerCase() === setting.replace(' ','').toLowerCase())
             console.log(check)
             if(check.length === 0){
-                const [status,data] = await API.preferences.set(1,setting)
+                const [status,data] = await API.preferences.set(idProfile,setting)
                 if(status) {
                     let interest = state.interests
                     interest.push(JSON.parse(data))
                     setState((prev) => ({...prev,interests:interest}))
+
+                    //Exceute callback for realoading the preferences
+                    onSet()
                 }
+            } else {
+                alert("Aviso: Ya tienes ese elemento guardado")
             }
         }
 
-        else if (state.points === 'lang'){
+        else if (state.points === 'lang' && loaded){
 
             let check = state.langs.filter(item => item.value === setting)
             if(check.length === 0){
-                const [status,data] = await API.langs.set(1,setting,100)
+                const [status,data] = await API.langs.set(idProfile,setting,100)
                 if(status) {
                     let lang = state.langs
                     lang.push(JSON.parse(data))
                     setState((prev) => ({...prev,langs:lang}))
+
+                    //Exceute callback for realoading the preferences
+                    onSet()
                 }
             } else {
                 alert("Aviso: Ya tienes agregado ese elemento!")

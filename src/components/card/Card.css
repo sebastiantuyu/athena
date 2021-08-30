@@ -46,6 +46,7 @@
 
 .c-d-content {
     font-size: 10px;
+    padding: 0 0.8em 0 0.5em;
 }
 
 .card-description p {
@@ -113,8 +114,47 @@
     width: 40px;
 }
 
+.any-coincidence {
+    padding:0 1em 0 1em;
+    width: 80%;
+    height: 90%;
+    background-color: rgba(255,255,255,.35);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    text-align: center;
+    font-size: 22px;
+    color:var(--dark);
+}
 
 
+
+.matched {
+    animation: 0.5s match 1;
+}
+
+.next {
+    animation: 0.5s next 1;
+}
+
+@keyframes match {
+    from{
+      transform: rotate3d(0,0,1,0deg);
+    }
+    to {
+        transform:translate(100px,-40px);
+        opacity:0;
+    }
+}
+
+@keyframes next {
+    from{
+      transform: rotate3d(0,0,1,0deg);
+    }
+    to {
+        transform:translate(-100px,-40px);
+        opacity:0;
+    }
+}
 
 
 

@@ -6,16 +6,46 @@ const rootUrl: string = "http://192.168.0.13:8000/api/"
 class User {
     
     url: string;
+    id: Number;
 
     constructor (parentUrl:string) {
         this.url = parentUrl + "users/"; 
+        this.id = 0;
     }
 
-    read = async () => {
-        const response = await Https.objects.get(this.url+"login/","")        
-        if(response) {
+    private setId = (id:Number) => {
+        try {
+            localStorage.setItem("session-id",id.toString())
+            this.id = id
             return true
-        }
+        } catch (error) {
+            console.error(error)
+            return null
+        }   
+    }
+
+    private onResponse = (response:any) => {
+        if(response !== null){
+            if(response.status === true)
+            {
+                return [true,response.data]
+            }
+            else return [false,null]
+        } else return [false,null]
+    }
+
+
+    getId = () => { 
+        return localStorage.getItem("session-id")
+     }
+
+    logAsGuest = async () => {
+        const response = await Https.objects.get(this.url
+                                                 +"login-as-guest/",
+                                                {
+                                                    method:"POST"
+                                                })        
+        return this.onResponse(response)
     }
 
     match = async (id:Number,userInfo:any) => {
@@ -31,10 +61,7 @@ class User {
                                                 method:'POST',
                                                 body:body
                                             })
-        if (response.status) {
-            return [true,response.data]
-        } else 
-            return [false,null]
+        return this.onResponse(response)
     }
 
     getMatches = async (id:Number) => {
@@ -42,36 +69,24 @@ class User {
                                                 `users/match/get/?id=${id}`,{
                                                     method:'GET'
                                                 })
-
-        if(response.status) {
-            return [true,response.data]
-        } else 
-            return [false,null]
+        return this.onResponse(response)                                                
     }
 
-    coincidences = async (id:Number,preferences:string[],langs:string[]) => {
-
-        const data = new FormData()
-        data.append("preferences",JSON.stringify(preferences))
-        data.append("langs",JSON.stringify(langs))
-
+    coincidences = async () => {
 
         const response = await Https.objects.get(rootUrl+
-                                                `users/get-coincidences/?id=${id}`,
+                                                `users/get-coincidences/?id=${this.getId()}`,
                                                 {
                                                     method:'POST',
-                                                    body:data
                                                  })
-        if (response.status)
-            return [true,response.data]
-        else 
-            return [false,null]
+        return this.onResponse(response)                                                
     }
 
     readPreferences = async (id:Number) => {
 
         const response = await Https.objects.get(rootUrl+
-                                                "preferences/get-all/?id="+id,{
+                                                `preferences/get-all/?id=${this.getId()}`,
+                                                {
                                                     method:'GET',
                                                 })
         try {
@@ -79,7 +94,9 @@ class User {
                 return response.data
             }                
         } catch (error) {
-            console.error(error)
+            console.error("Error reading data:",error)
+            console.log(response)
+                return null
         }
     }
 

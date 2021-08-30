@@ -9,6 +9,33 @@
 }
 
 
+.empty-result {
+    width: 40%;
+    max-width: 450px;
+    color:var(--white);
+    font-size: 22px;
+    text-align: center;
+    padding: 0 1.5em 0 1.5em;
+}
+
+.empty-result img{
+    max-width: 280px;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.e-title{
+    font-size: 25px;
+    font-weight: 200;
+    margin:0.25em;
+}
+.e-description{
+    font-size: 18px;
+    margin: .25em;
+    padding: 0 .5em 0 .5em;
+}
+.call-to-action{color:var(--compGreenLight)}
+
 
 @media screen and (min-width:320px) {
     .app-main-container {
@@ -28,5 +55,11 @@
 @media screen and (min-width:1440px){
     .app-main-container {
         grid-template-columns: minmax(400px,500px) 6fr;
+    }
+    .e-title{
+        font-size: 35px;
+    }
+    .e-description{
+        font-size: 22px;
     }
 }
