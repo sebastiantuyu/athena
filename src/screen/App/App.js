@@ -95,8 +95,10 @@ function App() {
   
   const loadCoincidences = async () => {
     const [status,data] = await API.user.coincidences()
-    let parsed = JSON.parse(await data)
-    return parsed['results']
+    let parsed = JSON.parse(data)
+    if(data !== null)
+      return parsed['results']
+    else return []
   }
 
 
