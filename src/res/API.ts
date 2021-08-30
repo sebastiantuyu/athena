@@ -44,7 +44,10 @@ class User {
                                                  +"login-as-guest/",
                                                 {
                                                     method:"POST"
-                                                })        
+                                                })   
+        if (response.status) {
+            this.setId(JSON.parse(response.data)['id'])
+        }                                                
         return this.onResponse(response)
     }
 
