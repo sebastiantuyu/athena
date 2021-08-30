@@ -21,6 +21,7 @@ function App() {
     
     const id = parseInt(API.user.getId())
     if (typeof(id) === "number" && id !== 0){
+      await API.langs.setLocalLangs()
       const coincidences = await loadCoincidences()
       const [status,matches] = await API.user.getMatches(id)
       setState((prev) => ({...prev,
