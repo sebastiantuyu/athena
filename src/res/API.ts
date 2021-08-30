@@ -1,6 +1,6 @@
 import Https from "./Https";
 
-const rootUrl: string = "http://torrenv.eba-wrqnd2pm.us-west-2.elasticbeanstalk.com/api/"
+const rootUrl: string = "https://torre-backend-demo.herokuapp.com/api/"
 
 
 class User {
