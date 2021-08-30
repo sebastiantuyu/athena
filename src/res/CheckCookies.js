@@ -1,15 +1,22 @@
-import StorageHandler from './StorageHandler.js'
 import {Redirect} from 'react-router-dom'
-import API from './API.ts'
+import API from './API'
 
 const CheckCookies = async () => {
 
 
+        const session = API.user.getId()
+        console.log("cookies-session",session)
+        if(session === null)
+            {
+                return false
+            }
+        else
+            {
+                await API.langs.setLocalLangs()
+                return true
+            }
     try{
-        await API.langs.setLocalLangs()
-        //return StorageHandler.instance.loadSession();    
-        return true
-        
+
     } catch (err) {
         // Trigger if there is a problem reading the cookies
         console.error(err)

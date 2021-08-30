@@ -1,6 +1,6 @@
 import Https from "./Https";
 
-const rootUrl: string = "http://192.168.0.13:8000/api/"
+const rootUrl: string = "http://torrenv.eba-wrqnd2pm.us-west-2.elasticbeanstalk.com/api/"
 
 
 class User {

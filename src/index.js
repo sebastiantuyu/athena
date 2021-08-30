@@ -15,13 +15,13 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route exact path="/" component={Auth}/>
+        <Route exact path="/" component={Auth}>
+        </Route>
         <Route exact path="/home">
-            { CheckCookies() === false ? 
-              <Redirect to="/" /> :
-              <App/>
-             }
-
+          { CheckCookies() === false ? 
+                    <App/>:
+                    <Redirect to="/" />           
+          }
         </Route>
       </Switch>
     </Router>
