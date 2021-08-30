@@ -13,19 +13,29 @@ import Japanese from "../../assets/flags/jap.png"
 
 
 /**
+ * userData:
+ *      interests: []
+ *      langs: []
+ *      image: string
+ *      name: string
+ *      description: string
+ * 
  * @param userData Dictionary with userData
  * @param onSwipe Callback called after user swipe left/right
  * @returns Swipable card
  * @returns Left or Rigth constant after swipe
  */
-export default function Card({userData,onSwipe}) {
+export default function Card({userData,onSwipe,onNextUser}) {
     
+    const MAX_SKILL_ALLOWED = 4
+
     const selectIcon = (lang) => {
+        console.log(lang)
         switch(lang)
          {
              case 'es':
                  return Spanish
-            case 'eng':
+            case 'en':
                 return English
             case 'fra':
                 return French
@@ -41,23 +51,26 @@ export default function Card({userData,onSwipe}) {
     }
 
     const renderInterests = () => {
-        if(userData.interests.length > 0)
+        if(userData.skills.length > 0)
             {
-                return userData.interests.map((item) => {
-                    return (
-                        <div className="interest-card-item shadow">
-                            {item}
-                        </div>
-                    )
+                return userData.skills.map((item,index) => {
+                    if(index < MAX_SKILL_ALLOWED)
+                    {
+                        return (
+                            <div className="interest-card-item shadow">
+                                {item.name}
+                            </div>
+                        )
+                    }
                 })
             }
     }
 
 
     const renderLang = () => {
-        return userData.lang.map((item) => {
+        return userData.langs.map((item) => {
             return( <div className="lang-item d-flex center-center shadow">
-                        <img src={selectIcon(item)} alt="" />
+                        <img src={selectIcon(item.code)} alt="" />
                     </div>)
         })
     }
@@ -87,11 +100,13 @@ export default function Card({userData,onSwipe}) {
                 </div>
 
                 <div className="card-buttons-bar d-flex a-center w-100">
-                    <div className="btn btn-left d-flex center-center shadow">
+                    <div className="btn btn-left d-flex center-center shadow"
+                        onClick={() => onNextUser()}>
                         <img src={Next} alt="" />
                     </div>
 
-                    <div className="btn btn-right d-flex center-center shadow">
+                    <div className="btn btn-right d-flex center-center shadow"
+                        onClick={() => onSwipe()}>
                         <img src={Match} alt="" />
                     </div>
                 </div>

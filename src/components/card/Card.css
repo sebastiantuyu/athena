@@ -99,6 +99,7 @@
 
 
 .btn{
+    cursor: pointer;
     background: var(--white);
     padding: .8em;
     border-radius: 50%;

@@ -3,17 +3,7 @@ import Https from "./Https";
 const rootUrl: string = "http://192.168.0.13:8000/api/"
 
 
-
-interface CRUD {
-       
-    create: Function;
-    read: Function;
-    update: Function;
-    delete: Function;
-}
-
-
-class User implements CRUD {
+class User {
     
     url: string;
 
@@ -28,16 +18,54 @@ class User implements CRUD {
         }
     }
 
-    create = () => {
+    match = async (id:Number,userInfo:any) => {
 
+        const body = new FormData()
+        body.append("name",userInfo.name)
+        body.append("username",userInfo.username)
+        body.append("image",userInfo.image)
+
+        const response = await Https.objects.get(rootUrl+
+                                            `users/match/set/?id=${id}`,
+                                            {
+                                                method:'POST',
+                                                body:body
+                                            })
+        if (response.status) {
+            return [true,response.data]
+        } else 
+            return [false,null]
     }
 
-    update = () => {
+    getMatches = async (id:Number) => {
+        const response = await Https.objects.get(rootUrl+
+                                                `users/match/get/?id=${id}`,{
+                                                    method:'GET'
+                                                })
 
+        if(response.status) {
+            return [true,response.data]
+        } else 
+            return [false,null]
     }
 
-    delete = () => {
+    coincidences = async (id:Number,preferences:string[],langs:string[]) => {
 
+        const data = new FormData()
+        data.append("preferences",JSON.stringify(preferences))
+        data.append("langs",JSON.stringify(langs))
+
+
+        const response = await Https.objects.get(rootUrl+
+                                                `users/get-coincidences/?id=${id}`,
+                                                {
+                                                    method:'POST',
+                                                    body:data
+                                                 })
+        if (response.status)
+            return [true,response.data]
+        else 
+            return [false,null]
     }
 
     readPreferences = async (id:Number) => {
@@ -58,6 +86,7 @@ class User implements CRUD {
 }
 
 class Langs {
+
     getAll: Function = () => {
         return localStorage.getItem('local-langs')
     }

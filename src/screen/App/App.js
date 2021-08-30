@@ -1,43 +1,83 @@
-import './App.css';
+import { useState, useEffect} from 'react';
 import Menu from '../../components/menu/Menu'
-import CheckCookies from '../../res/CheckCookies';
 import Card from '../../components/card/Card';
 import API from '../../res/API';
+import './App.css';
+import Loader from '../../components/loader/Loader';
 
 function App() {
 
-  const loadInformation = () => {
+  const [state, setState] = useState({
+    results:[],
+    matches:[],
+    position:0,
+    loaded:false
+  })
 
-      return {
-          name:"Sebastian Tuyu",
-          description:"I'm a developer that loves to learn and understand new topics, always trying to develop new skills",
-          image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg",
-          location:"Merida,Yucatán",
-          lang:["es","eng"],
-          interests:["Java","Django","Web Development","Marketing"]
-      }
+  
+  const loadInformation = async () => {
+      
+    const coincidences = await loadCoincidences()
+    const [status,matches] = await API.user.getMatches(1)
+    setState((prev) => ({...prev,
+                          results:coincidences,
+                          matches:JSON.parse(matches),
+                          loaded:true}))
   }
 
-  const swipeUser = () => {
+  useEffect(() => {
+      loadInformation()
+  },state)
 
+
+  const nextUser = () => {
+    let newPosition = state.position + 1
+    if(state.results.length > newPosition){
+      setState((prev) => ({...prev,position:prev.position + 1}))
+    }
+  }
+
+  const swipeUser = async () => {
+      let newPosition = state.position + 1
+      if(state.results.length > newPosition)
+        {
+          const [status,data] = await API.user.match(1,state.results[state.position])
+          if(status)
+          {
+            let past_matches = state.matches
+            past_matches.push(JSON.parse(data))
+            setState((prev) => ({...prev,position:prev.position + 1,matches:past_matches}))
+          }
+        }
   }
   
+  const loadCoincidences = async () => {
+    const [status,data] = await API.user.coincidences(1)
+    let parsed = JSON.parse(await data)
+    return parsed['results']
+  }
+
 
   const renderCard = () => {
-      
-      const data = loadInformation()
-
-      return (
-        <Card userData={data} onSwipe={() => swipeUser()}/>
-      )
+      const data = state.results
+      if(data.length > 0)
+        return (
+          <Card userData={data[state.position]} 
+                onSwipe={() => swipeUser()}
+                onNextUser={() => nextUser()}/>
+        )
   }
 
   return (
     <div className="app-main-container">
-      <Menu />
-
+      <Menu matches={state.matches}/>
+ 
       <div className="app-card d-flex center-center">
-        { renderCard() }
+        { 
+          state.loaded ? 
+          renderCard() : 
+          <Loader /> 
+        }
       </div>
     </div>
   );

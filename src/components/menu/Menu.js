@@ -9,7 +9,7 @@ import LangPicker from '../picker/LangPicker'
 import PreferenceItem from '../preference/PreferenceItem'
 
 
-export default function Menu() {
+export default function Menu({matches}) {
     
 
 
@@ -37,7 +37,7 @@ export default function Menu() {
         setState((prev) => ({...prev,
                                 langs:data.languages,
                                 interests:data.interests,
-                                localLangs:localLang
+                                localLangs:localLang,
                                 }))       
     }
 
@@ -167,29 +167,7 @@ export default function Menu() {
 
 
     const loadSavedProfiles = () => {
-        const saved = [
-            {
-                name:"Sebastian Tuyu",
-                image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg",
-            },
-            {
-                name:"Carlos Contreras",
-                image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg"
-            },
-            {
-                name:"Freddy Vega",
-                image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg"
-            },
-            {
-                name:"Christian Van",
-                image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg"
-            },
-            {
-                name:"Louis Von Han",
-                image:"https://starrgate.s3.amazonaws.com:443/users/93a7edd8737345b48d77fafc431ee5d43b88bba8/profile_MmZuhXN.jpg"
-            }]
-
-        return saved.map((item) => {
+        return matches.map((item) => {
             return(
                 <ItemProfile data={item}/>
             )
