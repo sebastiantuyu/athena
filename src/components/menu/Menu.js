@@ -6,6 +6,7 @@ import Delete from '../../assets/svgs/delete.svg'
 import ItemProfile from '../profile/ItemProfile'
 import API from '../../res/API'
 import LangPicker from '../picker/LangPicker'
+import PreferenceItem from '../preference/PreferenceItem'
 
 
 export default function Menu() {
@@ -15,8 +16,8 @@ export default function Menu() {
     const [state, setState] = useState({
         show:false,
         points:'int',
-        interests:["Python","Django","UX/UI","Figma","LOL"],
-        langs:["esp","eng"],
+        interests:[],
+        langs:[],
         settingContent:"",
         localLangs:[],
         selectedLang:"",
@@ -35,7 +36,7 @@ export default function Menu() {
         
         setState((prev) => ({...prev,
                                 langs:data.languages,
-                                interest:data.interests,
+                                interests:data.interests,
                                 localLangs:localLang
                                 }))       
     }
@@ -45,20 +46,51 @@ export default function Menu() {
         setSetting(lang)
     }
 
-    const addSetting = () => {
+
+    const onDeleteLang = (id) => {
+        // Deletes the lang {id} of the list
+        let list = state.langs.filter(item => item.id !== id)
+        setState((prev) => ({...prev,langs:list}))
+    }
+
+    const onDeletePref = (id) => {
+        // Deletes the interest {id} of the list
+        let list = state.interests.filter(item => item.id !== id)
+        setState((prev) => ({...prev,interests:list}))
+    }
+
+    const addSetting = async () => {
         tooggleModal()
 
         if(state.points === 'int')
         {   
-            let interest = state.interests
-            interest.push(setting)
-            setState((prev) => ({...prev,interests:interest}))
+
+            // Check if there some coincidences
+            let check = state.interests.filter(item => item.name.replace(' ','').toLowerCase() === setting.replace(' ','').toLowerCase())
+            console.log(check)
+            if(check.length === 0){
+                const [status,data] = await API.preferences.set(1,setting)
+                if(status) {
+                    let interest = state.interests
+                    interest.push(JSON.parse(data))
+                    setState((prev) => ({...prev,interests:interest}))
+                }
+            }
         }
 
         else if (state.points === 'lang'){
-            let lang = state.langs
-            lang.push(setting)
-            setState({langs:lang})
+
+            let check = state.langs.filter(item => item.value === setting)
+            if(check.length === 0){
+                const [status,data] = await API.langs.set(1,setting,100)
+                if(status) {
+                    let lang = state.langs
+                    lang.push(JSON.parse(data))
+                    setState((prev) => ({...prev,langs:lang}))
+                }
+            } else {
+                alert("Aviso: Ya tienes agregado ese elemento!")
+            }
         }
     }
 
@@ -115,17 +147,12 @@ export default function Menu() {
 
 
 
-    const loadPreferences = () => {
-        
+    const loadPreferences = () => {       
         const preferences = state.interests
         
         return preferences.map((item) => {
-            return(
-                <div className="preference-item d-flex a-center">
-                    {item}
-                    <img src={Delete} alt="" />
-                </div>
-            )
+            return(<PreferenceItem data={item} target="preference"
+                    onDelete={(id) => onDeletePref(id)}/>)
         })
     }
     
@@ -133,13 +160,8 @@ export default function Menu() {
         const preferences = state.langs
 
         return preferences.map((item) => {
-            console.log(item)
-            return(
-                <div className="preference-item d-flex a-center">
-                    {item.name}
-                    <img src={Delete} alt="" />
-                </div>
-            )
+            return(<PreferenceItem data={item} target="lang"
+                    onDelete={(id) => onDeleteLang(id)}/>)
         })
     }
 

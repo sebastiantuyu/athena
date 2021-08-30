@@ -73,13 +73,72 @@ class Langs {
             }
         }
     }
+
+    set: Function = async (id:Number,lang:string,level:Number) => {
+
+        const body = new FormData()
+        body.append("lang", lang);
+        body.append("level", level.toString());
+
+        const response = await Https.objects.get(rootUrl+
+                                                 `preferences/lang/set/?id=${id}`,
+                                                 {
+                                                     method:'POST',
+                                                     body:body
+                                                 })
+        if(response.status) {
+            return [true,response.data]
+        } else 
+            return [false,null]
+    }
+
+
+    delete: Function = async (id:Number) => {
+        const response = await Https.objects.get(rootUrl+
+                                                `preferences/lang/delete/?lang=${id}`
+                                                ,{
+                                                    method:'GET'
+                                                })
+        return response.status
+    }
 }
+
+class Preferences {
+    set: Function = async (id:Number,preference:string) => {
+        
+        const body = new FormData()
+        body.append("preference",preference)
+
+        const response = await Https.objects.get(rootUrl +
+                                        `preferences/set/?id=${id}`,
+                                        {
+                                            method:'POST',
+                                            body:body,
+                                        })
+        if (response.status)
+            return [true,response.data]
+         else 
+            return [false,null]
+    }
+
+    delete: Function = async (id:Number) => {
+        const response = await Https.objects.get(rootUrl+
+                                                `preferences/delete/?preference=${id}`,
+                                                {
+                                                    method:"GET",
+                                                })
+        return response.status
+
+    }
+}
+
+
 
 class API {
     
-    static user: User = new User(rootUrl);
-    static langs: Langs = new Langs();
-
+    static user: User = new User(rootUrl)
+    static langs: Langs = new Langs()
+    static preferences: Preferences = new Preferences()
 }
 
 export default API;
